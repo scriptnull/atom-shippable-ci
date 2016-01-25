@@ -14,10 +14,14 @@ module.exports = AtomShippableCi =
   atomShippableCiView: null
   modalPanel: null
   subscriptions: null
+  shipBadge: null
 
   activate: (state) ->
     @atomShippableCiView = new AtomShippableCiView(state.atomShippableCiViewState)
     @modalPanel = atom.workspace.addModalPanel(item: @atomShippableCiView.getElement(), visible: false)
+    ShippableBadgeView = require './views/shippable-badge-view.coffee'
+    @shipBadge = new ShippableBadgeView();
+    @shipBadge.init()
 
     # Events subscribed to in atom's system can be easily cleaned up with a CompositeDisposable
     @subscriptions = new CompositeDisposable
@@ -34,9 +38,14 @@ module.exports = AtomShippableCi =
     @modalPanel.destroy()
     @subscriptions.dispose()
     @atomShippableCiView.destroy()
+    @shipBadge.destroy()
 
   serialize: ->
     atomShippableCiViewState: @atomShippableCiView.serialize()
+
+  consumeStatusBar: (statusBar) ->
+    console.log "consumeStatusBar"
+    statusBar.addLeftTile(item: @shipBadge, priority: 100)
 
   toggle: ->
     console.log 'AtomShippableCi was toggled!'
@@ -47,14 +56,16 @@ module.exports = AtomShippableCi =
       @modalPanel.show()
 
   openProjectInBrowser: ->
+    __ = @
+    @shipBadge.setText "Opening Project in browser"
     doBaseCheck (err, projectId) ->
-      return @handleError err if err
+      return __.handleError err if err
       shell.openExternal "https://shippable.com/projects/#{projectId}"
 
   openLatestBuildInBrowser: ->
     __ = @
     doBaseCheck (err, projectId) ->
-      return @handleError err if err
+      return __.handleError err if err
       client.getLatestBuild projectId, (err, data) ->
         return __.handleError err if err
         build = data.body?[0]
@@ -64,7 +75,7 @@ module.exports = AtomShippableCi =
   currentStatus: ->
     __ = @
     doBaseCheck (err, projectId) ->
-      return @handleError err if err
+      return __.handleError err if err
       client.getLatestBuild projectId, (err, data)->
         return __.handleError err if err
         build = data.body?[0]
@@ -79,15 +90,13 @@ module.exports = AtomShippableCi =
           COMMIT MSG \"#{build.lastCommitShortDescription}\"\n
           TRIGGERED BY #{build.triggeredBy.displayName || build.triggeredBy.login}\n
           "
-          # TESTS PASSED #{build.testsPassed}\n
-          # TESTS FAILED #{build.testsFailed}\n
-          # TESTS SKIPPED #{build.testsSkipped}\n
-          # TOTAL TESTS #{build.totalTests}
+          __.shipBadge.setBuildItemResult buildItem
         return
       return
     return
 
   handleError: (err) ->
+    @shipBadge.setText '[Shippable-CI] Error !'
     atom.notifications.addError '[Shippable-CI] Something went wrong.' ,
        detail : err.message
     console.error err

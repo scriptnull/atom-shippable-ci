@@ -12,7 +12,7 @@ module.exports = (cb) ->
     # If shippable.yml is present , returns data else error
     getShippableYmlData : (cb)->
       fs.readFile "#{atom.project.getDirectories()[0].path}/shippable.yml" , (err, data) ->
-        cb(err , data ?= data.toString())
+        cb(err , data)
 
     getProjectId: (yamlAsJson) ->
         return yamlAsJson?.atom?.projectId
@@ -21,7 +21,7 @@ module.exports = (cb) ->
       __ = @
       @getShippableYmlData (err, data ) ->
         return cb new Error "Cannot retrieve shippable.yml file" if err
-        projectId = __.getProjectId yaml.load data
+        projectId = __.getProjectId yaml.load data.toString()
         return cb new Error "Cannot retrieve ProjectId. Please check shippable.yml" if !projectId
         cb null , projectId
 
