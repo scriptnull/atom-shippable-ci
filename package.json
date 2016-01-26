@@ -1,6 +1,6 @@
 {
   "name": "shippable-ci",
-  "main": "./lib/atom-shippable-ci",
+  "main": "./lib/shippable-ci",
   "version": "0.0.0",
   "description": "A short description of your package",
   "keywords": [],
