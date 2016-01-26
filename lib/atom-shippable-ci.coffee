@@ -56,30 +56,27 @@ module.exports = AtomShippableCi =
       @modalPanel.show()
 
   openProjectInBrowser: ->
-    __ = @
     @shipBadge.setText "Opening Project in browser"
-    doBaseCheck (err, projectId) ->
-      return __.handleError err if err
+    doBaseCheck (err, projectId) =>
+      return @handleError err if err
       shell.openExternal "https://shippable.com/projects/#{projectId}"
 
   openLatestBuildInBrowser: ->
-    __ = @
-    doBaseCheck (err, projectId) ->
-      return __.handleError err if err
-      client.getLatestBuild projectId, (err, data) ->
-        return __.handleError err if err
+    doBaseCheck (err, projectId) =>
+      return @handleError err if err
+      client.getLatestBuild projectId, (err, data) =>
+        return @handleError err if err
         build = data.body?[0]
-        return __.handleError new Error "Cannot retrieve build details from server." if !build
+        return @handleError new Error "Cannot retrieve build details from server." if !build
         shell.openExternal "https://shippable.com/builds/#{build.id}"
 
   currentStatus: ->
-    __ = @
-    doBaseCheck (err, projectId) ->
-      return __.handleError err if err
-      client.getLatestBuild projectId, (err, data)->
-        return __.handleError err if err
+    doBaseCheck (err, projectId) =>
+      return @handleError err if err
+      client.getLatestBuild projectId, (err, data) =>
+        return @handleError err if err
         build = data.body?[0]
-        return __.handleError new Error "Cannot retrieve build details from server." if !build
+        return @handleError new Error "Cannot retrieve build details from server." if !build
         buildItems = require './views/build-status.js'
         buildItem = buildItems[build.status]
         atom.notifications["add#{buildItem.type}"] "Build Status : #{buildItem.message}",
@@ -90,10 +87,7 @@ module.exports = AtomShippableCi =
           COMMIT MSG \"#{build.lastCommitShortDescription}\"\n
           TRIGGERED BY #{build.triggeredBy.displayName || build.triggeredBy.login}\n
           "
-          __.shipBadge.setBuildItemResult buildItem
-        return
-      return
-    return
+          @shipBadge.setBuildItemResult buildItem
 
   handleError: (err) ->
     @shipBadge.setText '[Shippable-CI] Error !'
