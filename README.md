@@ -54,4 +54,4 @@ More than Welcomed ! Here are some pointers ,
 
 ### License
 
-[![GPLv3](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/720px-GPLv3_Logo.svg.png)](https://github.com/scriptnull/atom-shippable-ci/blob/master/LICENSE.md)
+[![GPLv3](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/320px-GPLv3_Logo.svg.png)](https://github.com/scriptnull/atom-shippable-ci/blob/master/LICENSE.md)
