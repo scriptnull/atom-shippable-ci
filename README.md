@@ -28,12 +28,18 @@ You can activate all the shippable commands via command palette or through key b
 
 Check the current status of the latest build of a project.
 
+![currentStatus](https://raw.githubusercontent.com/scriptnull/atom-shippable-ci/master/images/shippable_current_status.png)
+
 #### Open Project in Browser
 > keymap : Shift+S P
 
 Opens project page of the current project in web browser.
 
+![openProject](https://raw.githubusercontent.com/scriptnull/atom-shippable-ci/master/images/shippable_open_project.png)
+
 #### Open Latest Build in Browser
 > keymap : Shift+S B
 
 Opens latest build of the current project in web browser.
+
+![openBuild](https://raw.githubusercontent.com/scriptnull/atom-shippable-ci/master/images/shippable_open_build.png)
