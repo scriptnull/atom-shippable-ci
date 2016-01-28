@@ -43,3 +43,15 @@ Opens project page of the current project in web browser.
 Opens latest build of the current project in web browser.
 
 ![openBuild](https://raw.githubusercontent.com/scriptnull/atom-shippable-ci/master/images/shippable_open_build.gif)
+
+### Contribution
+More than Welcomed ! Here are some pointers ,
+- Write tests.
+- Set up Shippable as CI.
+- Report Issues.
+- Request Features.
+- Send a PR ! This should be awesome. 
+
+### License
+
+[![GPLv3](https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/GPLv3_Logo.svg/720px-GPLv3_Logo.svg.png)](https://github.com/scriptnull/atom-shippable-ci/blob/master/LICENSE.md)
