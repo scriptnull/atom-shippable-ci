@@ -18,4 +18,22 @@ You can find your project's id in the url of your project page.
 ![projectId](https://raw.githubusercontent.com/scriptnull/atom-shippable-ci/master/images/shippable_projectId.png)
 
 If you want to set up private projects, you need to paste your `apiToken` in the settings page (`ctrl+,`) of the package.
-![packageSettings](https://raw.githubusercontent.com/scriptnull/atom-shippable-ci/master/images/shippable_settings.png)
+
+### Commands
+Press `Ctrl+Shift+P` to access command palette and search for Shippable.
+You can activate all the shippable commands via command palette or through key bindings.
+
+#### Current Status
+> Keymap : Shift+S S
+
+Check the current status of the latest build of a project.
+
+#### Open Project in Browser
+> keymap : Shift+S P
+
+Opens project page of the current project in web browser.
+
+#### Open Latest Build in Browser
+> keymap : Shift+S B
+
+Opens latest build of the current project in web browser.

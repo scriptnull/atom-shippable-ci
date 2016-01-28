@@ -9,5 +9,5 @@
 # https://atom.io/docs/latest/behind-atom-keymaps-in-depth
 'atom-workspace':
   'shift-s s': 'shippable-ci:current-status'
-  'shift-s o': 'shippable-ci:open-project-in-browser',
-  'shift-s p': 'shippable-ci:open-latest-build-in-browser'
+  'shift-s p': 'shippable-ci:open-project-in-browser',
+  'shift-s b': 'shippable-ci:open-latest-build-in-browser'
