@@ -31,7 +31,7 @@ class ShippableBadgeView extends HTMLElement
     #Append badge
     @innerHTML = ""
     @appendChild badge
-    @appendChild @lastSynced
+    setTimeout ( => @appendChild @lastSynced ) , 5000
     #Start timer to show last synced time
     @startSyncTimer()
 

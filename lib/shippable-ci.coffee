@@ -66,6 +66,7 @@ module.exports = AtomShippableCi =
   currentStatus: ->
     doBaseCheck (err, projectId) =>
       return @handleError err if err
+      @shipBadge.setText "Loading Shippable..."
       client.getLatestBuild projectId, (err, data) =>
         return @handleError err if err
         build = data.body?[0]
