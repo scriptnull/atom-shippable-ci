@@ -2,16 +2,9 @@
   "name": "shippable-ci",
   "main": "./lib/shippable-ci",
   "version": "0.0.0",
-  "description": "A short description of your package",
+  "description": "Shippable CI integration for atom.",
   "keywords": [],
-  "activationCommands": {
-    "atom-workspace": [
-      "shippable-ci:current-status",
-      "shippable-ci:open-project-in-browser",
-      "shippable-ci:open-latest-build-in-browser"
-    ]
-  },
-  "repository": "https://github.com/atom/atom-shippable-ci",
+  "repository": "https://github.com/scriptnull/atom-shippable-ci",
   "license": "MIT",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"

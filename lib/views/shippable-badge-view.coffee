@@ -2,7 +2,6 @@ moment = require 'moment'
 class ShippableBadgeView extends HTMLElement
   init: ->
     @classList.add('shippable-badge-view', 'inline-block')
-    @innerText = "Shippable is loading..."
 
   setText: (text) ->
     @innerText = text

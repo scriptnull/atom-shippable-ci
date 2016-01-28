@@ -1,20 +1,16 @@
 # See https://atom.io/docs/latest/hacking-atom-package-word-count#menus for more details
 'context-menu':
   'atom-text-editor': [
-    {
-      'label': 'Toggle atom-shippable-ci'
-      'command': 'atom-shippable-ci:toggle'
-    }
   ]
 'menu': [
   {
     'label': 'Packages'
     'submenu': [
-      'label': 'atom-shippable-ci'
+      'label': 'Shippable'
       'submenu': [
         {
-          'label': 'Toggle'
-          'command': 'atom-shippable-ci:toggle'
+          'label': 'Current Status'
+          'command': 'shippable-ci:current-status'
         }
       ]
     ]

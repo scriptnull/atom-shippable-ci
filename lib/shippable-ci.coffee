@@ -10,6 +10,16 @@ client = ApiClient.getInstance()
 module.exports = AtomShippableCi =
   subscriptions: null
   shipBadge: null
+  config:
+    checkBuildStatusOnStartup:
+      type: 'boolean'
+      default: false
+
+    apiToken:
+      title: 'API Token'
+      type: 'string'
+      default: '< Your API Token >'
+
 
   activate: (state) ->
 
@@ -25,6 +35,10 @@ module.exports = AtomShippableCi =
     @subscriptions.add atom.commands.add 'atom-workspace', 'shippable-ci:open-project-in-browser': => @openProjectInBrowser()
     @subscriptions.add atom.commands.add 'atom-workspace', 'shippable-ci:open-latest-build-in-browser': => @openLatestBuildInBrowser()
 
+    #Check if we should check build status on startup
+    if atom.config.get 'shippable-ci.checkBuildStatusOnStartup'
+      @currentStatus()
+
   deactivate: ->
     @subscriptions.dispose()
     @shipBadge.destroy()
@@ -35,10 +49,10 @@ module.exports = AtomShippableCi =
     statusBar.addLeftTile(item: @shipBadge, priority: 100)
 
   openProjectInBrowser: ->
-    @shipBadge.setText "Opening Project in browser"
     doBaseCheck (err, projectId) =>
       return @handleError err if err
       shell.openExternal "https://shippable.com/projects/#{projectId}"
+
 
   openLatestBuildInBrowser: ->
     doBaseCheck (err, projectId) =>
