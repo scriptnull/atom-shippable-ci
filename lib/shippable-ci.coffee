@@ -53,7 +53,6 @@ module.exports = AtomShippableCi =
       return @handleError err if err
       shell.openExternal "https://shippable.com/projects/#{projectId}"
 
-
   openLatestBuildInBrowser: ->
     doBaseCheck (err, projectId) =>
       return @handleError err if err
@@ -61,7 +60,7 @@ module.exports = AtomShippableCi =
         return @handleError err if err
         build = data.body?[0]
         return @handleError new Error "Cannot retrieve build details from server." if !build
-        shell.openExternal "https://shippable.com/builds/#{build.id}"
+        shell.openExternal "https://shippable.com/runs/#{build.id}"
 
   currentStatus: ->
     doBaseCheck (err, projectId) =>
@@ -72,12 +71,12 @@ module.exports = AtomShippableCi =
         build = data.body?[0]
         return @handleError new Error "Cannot retrieve build details from server." if !build
         buildItems = require './views/build-status.js'
-        buildItem = buildItems[build.status]
+        buildItem = buildItems[build.statusCode]
         atom.notifications["add#{buildItem.type}"] "Build Status : #{buildItem.message}",
           icon: buildItem.icon
           detail: "\n
-          BUILD ##{build.buildGroupNumber}\n
-          BRANCH #{build.branch}\n
+          RUN ##{build.runNumber}\n
+          BRANCH #{build.branchName}\n
           COMMIT MSG \"#{build.lastCommitShortDescription}\"\n
           TRIGGERED BY #{build.triggeredBy.displayName || build.triggeredBy.login}\n
           "
