@@ -13,7 +13,7 @@ module.exports =
          detail : err.message
       console.error err
 
-    constructor: (badge, handleError) ->
+    constructor: (badge) ->
       @shipBadge = badge
 
     showNotificationForRun: (run, runItem) ->

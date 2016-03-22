@@ -1,6 +1,5 @@
 # Core Modules
 {CompositeDisposable} = require 'atom'
-shell = require 'shell'
 
 # Others
 doBaseCheck = require './common/base-check.coffee'
@@ -10,6 +9,7 @@ client = ApiClient.getInstance()
 module.exports = AtomShippableCi =
   subscriptions: null
   shipBadge: null
+  command: null
   config:
     checkBuildStatusOnStartup:
       type: 'boolean'
@@ -33,7 +33,7 @@ module.exports = AtomShippableCi =
     # Commands
     @subscriptions.add atom.commands.add 'atom-workspace', 'shippable-ci:current-status': => @currentStatus()
     @subscriptions.add atom.commands.add 'atom-workspace', 'shippable-ci:open-project-in-browser': => @openProjectInBrowser()
-    @subscriptions.add atom.commands.add 'atom-workspace', 'shippable-ci:open-latest-build-in-browser': => @openLatestBuildInBrowser()
+    @subscriptions.add atom.commands.add 'atom-workspace', 'shippable-ci:open-latest-run-in-browser': => @openLatestRunInBrowser()
 
     #Check if we should check build status on startup
     if atom.config.get 'shippable-ci.checkBuildStatusOnStartup'
@@ -51,19 +51,15 @@ module.exports = AtomShippableCi =
 
   currentStatus: ->
     currentStatusCommand = require './commands/current-status.coffee'
-    c = new currentStatusCommand @shipBadge
-    c.run()
+    @command = new currentStatusCommand @shipBadge
+    @command.run()
 
   openProjectInBrowser: ->
-    doBaseCheck (err, projectId) =>
-      return @handleError err if err
-      shell.openExternal "https://shippable.com/projects/#{projectId}"
+    openProjectInBrowserCommand = require './commands/open-project-in-browser.coffee'
+    @command = new openProjectInBrowserCommand()
+    @command.run()
 
-  openLatestBuildInBrowser: ->
-    doBaseCheck (err, projectId) =>
-      return @handleError err if err
-      client.getLatestBuild projectId, (err, data) =>
-        return @handleError err if err
-        build = data.body?[0]
-        return @handleError new Error "Cannot retrieve build details from server." if !build
-        shell.openExternal "https://shippable.com/runs/#{build.id}"
+  openLatestRunInBrowser: ->
+    openLatestRunInBrowserCommand = require './commands/open-latest-run-in-browser.coffee'
+    @command = new openLatestRunInBrowserCommand()
+    @command.run()
