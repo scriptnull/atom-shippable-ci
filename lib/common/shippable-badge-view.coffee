@@ -6,6 +6,12 @@ class ShippableBadgeView extends HTMLElement
   setText: (text) ->
     @innerText = text
 
+  setLoadingText: ->
+    @innerText = 'Loading Shippable...'
+
+  setErrorText: ->
+    @innerText = 'Shippable - Error !'
+
   startSyncTimer: ->
     @updateLastSynced()
     @syncTimer = setInterval @updateLastSynced.bind(@) , 61000
@@ -13,10 +19,10 @@ class ShippableBadgeView extends HTMLElement
   updateLastSynced: ->
     @lastSynced.innerText = " #{moment(@lastSyncedDate).fromNow()}"
 
-  setBuildItemResult : (buildItem) ->
+  setRunItemResult : (runItem) ->
     #Create Icon
     icon = document.createElement 'span'
-    icon.classList.add 'icon' , "icon-#{buildItem.icon}"
+    icon.classList.add 'icon' , "icon-#{runItem.icon}"
     #Create Message
     message = document.createElement 'span'
     message.innerText = "Shippable"
@@ -25,7 +31,7 @@ class ShippableBadgeView extends HTMLElement
     @lastSyncedDate = new Date()
     #Create badge
     badge = document.createElement 'span'
-    badge.classList.add 'badge' , "badge-#{buildItem.type.toLowerCase()}"
+    badge.classList.add 'badge' , "badge-#{runItem.type.toLowerCase()}"
     badge.appendChild icon
     badge.appendChild message
     #Append badge
